@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 指定Struts2配置文件的DTD信息 -->
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "http://struts.apache.org/dtds/struts-2.3.dtd">
+<!-- Struts2配置文件的根元素 -->
+<struts>
+	<!-- 常量配置：设置使用开发模式 -->
+	<constant name="struts.devMode" value="true"/>
+	
+	<package name="comm" namespace="/" extends="struts-default">  
+		
+		<!-- 处理返回input -->
+		<global-results>
+			<result name="input" type="dispatcher">/error.jsp</result>
+		</global-results>
+	</package>
+	
+	<!-- 对应用户的Action -->
+	<package name="User" namespace="/" extends="json-default,comm">
+	
+		<!-- 对应不同的方法和不同的结果,这里是登录  -->
+		<action name="login" class="com.doubleP.book.action.UserAction" method="login">
+			<!-- 映射登录的处理 -->
+			<result name="success" type="dispatcher">index.jsp</result>
+		</action>
+		<!-- 注销 -->
+		<action name="logout" class="com.doubleP.book.action.UserAction" method="logout">
+			<!-- 映射注销的处理 -->
+			<result name="success" type="redirect">index.jsp</result>
+		</action>
+		<!-- 注册 -->
+		<action name="register" class="com.doubleP.book.action.UserAction" method="register">
+			<!-- 映射注册的处理 -->
+			<result name="registerSuccess" type="dispatcher">index.jsp</result>
+		</action>
+		<!-- 修改
+		<action name="update" class="com.doubleP.movie.action.UserAction" method="update">
+			映射修改的处理
+			<result name="success" type="dispatcher"></result>
+		</action>
+		删除
+		<action name="remove" class="com.doubleP.movie.action.UserAction">
+			映射删除的处理
+			<result name="success" type="dispatcher"></result>
+		</action>
+		根据关键字查询用户
+		<action name="findByKeyWord" class="com.doubleP.movie.action.UserAction" method="findByKeyWord">
+			<param name="pageSize">5</param>
+			映射查询结果
+			<result name="success" type="dispatcher"></result>
+		</action> -->
+		<!-- 判断用户名是否重复 -->
+		<action name="judge" class="com.doubleP.book.action.UserAction" method="judge">
+			<!-- 映射判断之后的异步处理 -->
+			<result name="success" type="json">
+				<!-- 序列化message -->
+				<param name="root">message</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- userdescription -->
+	<package name="userdescription" namespace="/jsp/user" extends="json-default,comm">
+		<!-- 用户添加详情 -->
+		<action name="addDescription" class="com.doubleP.book.action.UserDescriptionAction" method="addDescription">
+			<!-- 映射添加之后的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化数据 -->
+				<param name="root">message</param>
+			</result>
+		</action>
+		<!-- 修改用户详情 -->
+		<action name="updateDescription" class="com.doubleP.book.action.UserDescriptionAction" method="updaDescription"> 
+			<!-- 映射修改之后的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化数据 -->
+				<param name="root">message</param>
+			</result>
+		</action>
+		<!-- 查询用户详情 -->
+		<action name="findById" class="com.doubleP.book.action.UserDescriptionAction" method="findById">
+			<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	<!-- userwallet -->
+	<package name="userwallet" namespace="/jsp/user" extends="json-default,comm">
+		
+		<!-- 充值 -->
+		<action name="addWallet" class="com.doubleP.book.action.UserWalletAction" method="addWallet">
+			<!-- 映射添加的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">message</param>
+			</result>
+		</action>
+		<!-- 根据id查询 -->
+		<action name="findUserWalletById" class="com.doubleP.book.action.UserWalletAction" method="findById">
+			<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	<!-- member -->
+	<package name="Member" namespace="/jsp/member" extends="json-default,comm"> 
+		
+		<!-- 充值会员 -->
+		<action name="addMember" class="com.doubleP.book.action.MemberAction" method="addMember">
+			<!-- 映射充值的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">message</param>
+			</result>
+		</action>
+		<!-- 续费会员 -->
+		<action name="renewMember" class="com.doubleP.book.action.MemberAction" method="renewMember">
+			<!-- 映射续费的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">message</param>
+			</result>
+		</action>
+		<!-- 查询用户是否为会员 -->
+		<action name="findMemberById" class="com.doubleP.book.action.MemberAction" method="findById">
+			<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	<!-- memberType -->
+	<package name="memberType" namespace="/jsp/member" extends="json-default,comm"> 
+		
+		<!--查看自己会员类型 -->
+		<action name="findMemberTypeById" class="com.doubleP.book.action.MemberTypeAction" method="findById">
+			<!-- 映射充值的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">action</param>
+			</result>
+		</action>
+		<!-- 查询所有会员类型 -->
+		<action name="findAllMember" class="com.doubleP.book.action.MemberTypeAction" method="findAll">
+			<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+				<!-- 序列化 -->
+				<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	<!-- book -->
+	<package name="book" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍查询 -->
+		<action name="findAllBook" class="com.doubleP.book.action.BookAction" method="findAll">
+		<param name="pageSize">6</param>
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+				<param name="root">action</param>
+			</result>
+		</action>
+		
+		<action name="findBookById" class="com.doubleP.book.action.BookAction" method="findById">
+			<param name="pageSize">2</param>
+			<result name="success" type="dispatcher">/jsp/book/book-description.jsp</result>
+		</action>
+	</package>
+	
+	
+	<!-- bookdescription -->
+	<package name="bookdescription" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍xiangqing查询 -->
+		<action name="findAllDescription" class="com.doubleP.book.action.BookDescriptionAction" method="findAll">
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">user-description.jsp</result>
+		</action>
+		
+		
+	</package>
+	
+	
+	<!-- bookChapter -->
+	<package name="bookChapter" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍章节查询 -->
+		<action name="findAllChapte" class="com.doubleP.book.action.BookChapterAction" method="findAll">
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">user-description.jsp</result>
+		</action>
+		
+		<!-- 书籍章节查询 -->
+		<action name="findChapterById" class="com.doubleP.book.action.BookChapterAction" method="findById">
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">user-description.jsp</result>
+		</action>
+		
+		<action name="findBookByBookId" class="com.doubleP.book.action.BookChapterAction" method="findBookByBookId">
+			<result name="success" type="json">
+				<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	
+	<!-- bookContent -->
+	<package name="bookContent" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍内容查询 -->
+		<action name="findAllContent" class="com.doubleP.book.action.BookContentAction" method="findAll">
+		<!-- 映射查询的处理 -->
+			<result name="success" type="dispatcher">/jsp/book/read.jsp</result>
+		</action>
+		
+	</package>
+	
+	
+	<!-- bookPrice-->
+	<package name="bookPrice" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍章节查询 -->
+		<action name="findPriceById" class="com.doubleP.book.action.BookPriceAction" method="findById">
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">user-description.jsp</result>
+		</action>
+	</package>
+	
+	<!-- 购买书籍 -->
+	<package name="buyBook" namespace="/jsp/book" extends="json-default,comm">
+		<!-- 书籍xiangqing查询 -->
+		<action name="findAllBuy" class="com.doubleP.book.action.BuyBookAction" method="findAll">
+		<param name="pageSize">2</param>
+		<!-- 映射查询的处理 -->
+			<result name="success" type="json">
+			<param name="root">action</param>
+			</result>
+		</action>
+	</package>
+	
+	<package name="bookType" namespace="/jsp/book" extends="json-default,comm">
+		<action name="findTypeById" class="com.doubleP.book.action.BookTypeAction" method="findById">
+			<result name="success" type="json">
+				<param name="root">action</param>
+			</result>
+			<result name="input" type="json">
+				<param name="root">action</param>
+			</result>
+		</action>
+		<action name="findAll" class="com.doubleP.book.action.BookTypeAction" method="findAll">
+			<result name="success" type="json">
+				<param name="root">action</param>
+			</result>
+			<result name="input" type="json">
+				<param name="root">action</param>
+			</result>
+		</action>
+		
+	</package>
+</struts>

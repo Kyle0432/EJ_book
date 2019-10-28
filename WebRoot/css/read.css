@@ -1,0 +1,23 @@
+body{
+	font-family:"微软雅黑";
+}
+
+#read{
+	margin: 100px auto;
+}
+
+#read .container{
+	background-color: #FDF5E6;
+}
+#read .container h1{
+	margin: 10px auto 50px;
+}
+#read .container p{
+	font-size: 18px;
+	text-indent: 2em;
+	line-height: 2em;
+}
+#read .container a{
+	font-size: 20px;
+	color: #000000;
+}
